@@ -3,10 +3,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Techanalytica </title>
+  <title>Techanalytica – Compact Menu</title>
 
   <script src="https://cdn.tailwindcss.com"></script>
-
 
   <script>
     tailwind.config = {
@@ -25,12 +24,12 @@
   </script>
 
   <style>
-    /* Center-grow underline on hover */
+    /* Center-grow underline – slightly thinner for compact look */
     .nav-link {
       position: relative;
       display: inline-flex;
       align-items: center;
-      padding-bottom: 4px;
+      padding-bottom: 3px;
       color: #353531;
       transition: color 0.35s ease;
     }
@@ -41,7 +40,7 @@
       bottom: 0;
       left: 50%;
       width: 0;
-      height: 2.5px;
+      height: 2px;
       background: linear-gradient(90deg, #FE4A97, #A554EF);
       border-radius: 9999px;
       transform: translateX(-50%) scaleX(0);
@@ -77,7 +76,7 @@
     }
 
     nav.scrolled {
-      background-color: rgba(239, 242, 239, 0.96);   /* more solid on scroll */
+      background-color: rgba(239, 242, 239, 0.96);
       backdrop-filter: blur(16px);
       box-shadow: 0 10px 25px -10px rgba(0,0,0,0.12);
       border-bottom: 1px solid rgba(229, 231, 235, 0.6);
@@ -88,13 +87,13 @@
       opacity: 0.82;
     }
 
-    /* Mega menu (Software) hover lift */
+    /* Mega menu hover lift */
     .mega-item:hover {
       background: rgba(254, 74, 151, 0.065);
       transform: translateY(-2px);
     }
 
-    /* Multi-level dropdown (Industries) – CodePen style */
+    /* Multi-level dropdown (Industries) */
     .dropdown,
     .submenu {
       position: absolute;
@@ -103,8 +102,8 @@
       border: 1px solid rgba(255,255,255,0.08);
       border-radius: 12px;
       box-shadow: 0 12px 40px rgba(0,0,0,0.25);
-      min-width: 240px;
-      padding: 8px 0;
+      min-width: 220px;
+      padding: 6px 0;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.16s ease;
@@ -123,7 +122,7 @@
     }
 
     .submenu {
-      top: -8px;
+      top: -6px;
       left: 100%;
     }
 
@@ -131,10 +130,11 @@
     .sub-item {
       display: flex;
       align-items: center;
-      padding: 10px 20px;
+      padding: 8px 18px;
       color: rgba(255,255,255,0.9);
       text-decoration: none;
       transition: background 0.18s ease;
+      font-size: 0.875rem;
     }
 
     .dropdown-item:hover,
@@ -145,12 +145,13 @@
 
     .arrow-right {
       margin-left: auto;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
       opacity: 0.7;
     }
 
+    /* Compact menu text */
     .menu-text {
-      @apply text-sm lg:text-base font-medium tracking-wide;
+      @apply text-xs lg:text-sm font-medium tracking-tight;
     }
   </style>
 </head>
@@ -159,72 +160,72 @@
 <!-- NAVBAR -->
 <nav class="w-full z-50 fixed top-0" id="navbar">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between h-16 md:h-20 transition-all duration-500">
+    <div class="flex items-center justify-between h-14 md:h-16 transition-all duration-500">
 
-      <!-- LOGO -->
-      <a href="#" class="flex items-center gap-2.5">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-md">
+      <!-- LOGO – smaller on non-scroll -->
+      <a href="#" class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-base shadow-md">
           TA
         </div>
-        <span class="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+        <span class="text-lg md:text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
           Techanalytica
         </span>
       </a>
 
-      <!-- MENU -->
-      <div class="hidden md:flex items-center justify-center flex-1 space-x-8 lg:space-x-10 xl:space-x-12">
+      <!-- MENU – tight spacing, small text -->
+      <div class="hidden md:flex items-center justify-center flex-1 space-x-4 lg:space-x-6 xl:space-x-8">
 
-        <!-- Software – mega grid (previous style) -->
+        <!-- Software – mega grid -->
         <div class="relative group has-dropdown">
           <a href="#" class="nav-link menu-text">
             Software
-            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="ml-1 w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
-          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-5 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto w-[720px] max-w-[90vw]">
-            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100/70 overflow-hidden p-8">
-              <div class="grid grid-cols-2 gap-6">
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+          <div class="absolute left-1/2 -translate-x-1/2 top-full pt-4 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 pointer-events-none group-hover:pointer-events-auto w-[680px] max-w-[90vw]">
+            <div class="bg-white rounded-2xl shadow-2xl border border-gray-100/70 overflow-hidden p-7">
+              <div class="grid grid-cols-2 gap-5">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">💻</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">Project Management</h4>
-                    <p class="text-sm text-gray-600 mt-1">Asana, Monday, ClickUp, Jira</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">Project Management</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">Asana, Monday, ClickUp, Jira</p>
                   </div>
                 </a>
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">🤝</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">CRM</h4>
-                    <p class="text-sm text-gray-600 mt-1">Salesforce, HubSpot, Zoho</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">CRM</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">Salesforce, HubSpot, Zoho</p>
                   </div>
                 </a>
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">📊</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">Analytics & BI</h4>
-                    <p class="text-sm text-gray-600 mt-1">Tableau, Power BI, Looker</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">Analytics & BI</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">Tableau, Power BI, Looker</p>
                   </div>
                 </a>
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">🛒</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">E-commerce Platforms</h4>
-                    <p class="text-sm text-gray-600 mt-1">Shopify, WooCommerce</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">E-commerce</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">Shopify, WooCommerce</p>
                   </div>
                 </a>
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">📧</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">Marketing Automation</h4>
-                    <p class="text-sm text-gray-600 mt-1">ActiveCampaign, Klaviyo</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">Marketing Automation</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">ActiveCampaign, Klaviyo</p>
                   </div>
                 </a>
-                <a href="#" class="mega-item flex items-start gap-4 p-5 rounded-xl transition duration-200">
+                <a href="#" class="mega-item flex items-start gap-3 p-4 rounded-xl transition duration-200">
                   <div class="text-3xl flex-shrink-0">🛠</div>
                   <div>
-                    <h4 class="font-semibold text-dark group-hover:text-primary">Dev Tools</h4>
-                    <p class="text-sm text-gray-600 mt-1">GitHub, Postman, Docker</p>
+                    <h4 class="font-semibold text-dark group-hover:text-primary text-sm">Dev Tools</h4>
+                    <p class="text-xs text-gray-600 mt-0.5">GitHub, Postman, Docker</p>
                   </div>
                 </a>
               </div>
@@ -236,7 +237,7 @@
         <div class="relative group has-dropdown">
           <a href="#" class="nav-link menu-text">
             Industries
-            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="ml-1 w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
@@ -294,7 +295,7 @@
         <div class="relative group has-dropdown">
           <a href="#" class="nav-link menu-text">
             Vendors
-            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg class="ml-1 w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
           </a>
@@ -312,16 +313,16 @@
         <a href="#" class="nav-link menu-text">About Us</a>
       </div>
 
-      <!-- CTA -->
+      <!-- CTA – compact -->
       <div class="hidden md:block flex-shrink-0">
-        <a href="#" class="bg-gradient-to-r from-primary via-secondary to-accent text-white font-semibold px-6 py-2.5 rounded-full hover:shadow-xl hover:shadow-primary/30 transition transform hover:-translate-y-0.5 text-sm lg:text-base">
+        <a href="#" class="bg-gradient-to-r from-primary via-secondary to-accent text-white font-semibold px-5 py-1.5 rounded-full hover:shadow-xl hover:shadow-primary/30 transition transform hover:-translate-y-0.5 text-xs lg:text-sm">
           Join or Login
         </a>
       </div>
 
       <!-- Hamburger -->
       <button id="mobile-menu-btn" class="md:hidden text-dark focus:outline-none">
-        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </button>
@@ -334,40 +335,44 @@
   <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out">
     <div class="p-6 flex flex-col h-full">
       <div class="flex justify-between items-center mb-10">
-        <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Menu</span>
+        <span class="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Menu</span>
         <button id="close-menu" class="text-gray-500 hover:text-dark">
-          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
-      <nav class="flex flex-col space-y-5 text-base font-medium">
+      <nav class="flex flex-col space-y-4 text-sm font-medium">
         <a href="#" class="hover:text-primary">Software</a>
         <a href="#" class="hover:text-primary">Industries</a>
         <a href="#" class="hover:text-primary">Vendors</a>
         <a href="#" class="hover:text-primary">Write a Review</a>
         <a href="#" class="hover:text-primary">Blog</a>
         <a href="#" class="hover:text-primary">About Us</a>
-        <a href="#" class="bg-gradient-to-r from-primary to-accent text-white py-3 px-6 rounded-full text-center mt-6">Join or Login</a>
+        <a href="#" class="bg-gradient-to-r from-primary to-accent text-white py-2.5 px-5 rounded-full text-center mt-4 text-sm">Join or Login</a>
       </nav>
     </div>
   </div>
 </div>
 
 <!-- Spacer -->
-<div class="h-20 md:h-20"></div>
+<div class="h-14 md:h-16"></div>
 
 <!-- Test content -->
 <div class="min-h-screen flex items-center justify-center text-center px-6">
   <div>
     <h1 class="text-5xl md:text-7xl font-extrabold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-6">
-      TEchAnalytica Demo
+      Techanalytica
     </h1>
     <p class="text-xl text-gray-700 max-w-2xl mx-auto">
-      This is a demo page showcasing the new navbar design for Techanalytica. Scroll down to see the glass effect in action, and hover over the menu items to explore the dropdowns!
+      Your trusted guide to enterprise software. Read reviews, compare vendors, and discover the best tools for your business.
     </p>
   </div>
 </div>
+
+<p>
+  Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nobis eum, odit reiciendis tenetur provident sit assumenda ipsum, nesciunt culpa voluptates iste incidunt illum cum! Minus neque facilis impedit vero ratione hic, cupiditate quisquam eveniet! Quas officia, blanditiis corporis error doloribus atque nulla quae consequatur qui facilis tempora culpa deleniti esse neque modi possimus architecto laudantium labore mollitia nihil sunt explicabo, repudiandae iure! Culpa voluptates ex voluptas quasi libero natus excepturi laborum maiores. Exercitationem veniam sed sequi deleniti quibusdam similique autem, dolorem ipsum eveniet facere voluptates impedit necessitatibus quisquam iste quis dicta aut ab labore ea maiores esse numquam explicabo delectus eligendi? Eum autem rem fuga excepturi distinctio, explicabo nihil dolor doloremque voluptate repudiandae fugiat repellat, atque hic eaque eligendi accusamus corporis praesentium temporibus sed mollitia quo voluptatum esse fugit? Beatae reiciendis ut vel quidem quia eos, cum atque, consequuntur fuga, harum voluptate. Blanditiis neque, dicta expedita repudiandae earum voluptatum officiis delectus molestiae cumque saepe assumenda! Animi quasi iste eligendi rerum! Quia sed officia, omnis, rem consectetur expedita libero voluptates consequuntur praesentium veritatis quisquam beatae maxime minus modi dolorum blanditiis accusamus odio eius voluptatum atque magni nesciunt debitis culpa laudantium. Vero maiores est fugiat quod, deserunt, pariatur quasi enim saepe rerum non porro reprehenderit sunt dolorem blanditiis asperiores ab vitae optio ipsam dolores! Ex esse dolor consequatur blanditiis voluptatum, quidem vitae eos cupiditate quo quod animi recusandae illo eum nostrum voluptatibus quos labore maxime tempora quibusdam. Possimus accusantium vel, inventore atque ut veritatis deserunt quia, architecto voluptatibus minima repellat odio unde itaque dicta molestiae sint similique eaque aliquam et? Eius, aliquam at itaque sequi, enim quasi mollitia odio minus cumque repellendus laudantium accusantium eligendi adipisci laborum eum doloremque fugit temporibus et corrupti? Ipsa non quo cupiditate est recusandae mollitia maxime veritatis in voluptate perferendis! Numquam minima expedita, explicabo libero perspiciatis corrupti modi incidunt sed cumque vel facere. Dolore quo eaque ipsum et, nihil dignissimos, illum eum delectus animi repudiandae suscipit at enim quod veniam sed voluptate? Quae sequi dolorem unde dignissimos, excepturi in voluptates voluptatum qui quasi perferendis inventore pariatur illum sed. Eos, eveniet veniam amet obcaecati cumque architecto fuga rem praesentium magnam reiciendis recusandae sint ipsum. Quam consequuntur veritatis ipsa excepturi voluptatum ad nam! Maxime soluta ipsum asperiores saepe, tempora laborum recusandae labore non doloribus, odit molestias. Nemo tenetur dolorem sit dignissimos facilis architecto enim quam veritatis nam, inventore deserunt, consectetur vero. Consectetur commodi harum rem, natus voluptate doloremque minima iste officia aliquid est, ex quasi corporis aspernatur nemo mollitia. Dolore excepturi ipsum, eos dicta sed aliquid recusandae, magni dolor voluptates, quam nam? Accusamus, praesentium. Reprehenderit aut vero distinctio consequatur est sequi provident et voluptatum cumque autem. Accusamus nulla harum itaque doloribus quis voluptatum. Excepturi quo perferendis incidunt natus dolore adipisci at, nobis atque vitae? Exercitationem excepturi culpa saepe fugiat, sint praesentium mollitia suscipit quasi unde quaerat at aliquam perferendis eos consequuntur. Voluptates, itaque tenetur iusto eligendi non ducimus aperiam asperiores nihil cumque eum atque, culpa hic eveniet dicta rerum commodi a ipsam magnam voluptate placeat aliquam neque, id fuga?
+</p>
 
 <script>
 // Scroll → stronger glass effect
