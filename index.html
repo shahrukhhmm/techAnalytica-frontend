@@ -201,25 +201,26 @@
       inset: 0;
       overflow: hidden;
     }
-
-    .circle {
+    .shape {
       position: absolute;
-      border-radius: 50%;
-      background: rgba(254, 74, 151, 0.6);
+      /* border-radius: 16px;         
+      border-radius: 0;               */
+      background: rgba(254, 74, 151, 0.8);
       box-shadow: 0 0 35px rgba(165, 84, 239, 0.21);
       animation: riseUp linear infinite;
-      bottom: -180px;
+      bottom: -220px;                   /* slightly deeper start so they appear fully */
     }
 
-    .circle:nth-child(1)  { left: 10%; width: 110px; height: 110px; animation-duration: 26s; animation-delay: 0s;   background: rgba(254, 74, 151, 0.20); }
-    .circle:nth-child(2)  { left: 24%; width: 65px;  height: 65px;  animation-duration: 32s; animation-delay: .5s; background: rgba(165, 84, 239, 0.18); }
-    .circle:nth-child(3)  { left: 41%; width: 130px; height: 130px; animation-duration: 38s; animation-delay: 1s;   background: rgba(250, 122, 119, 0.16); }
-    .circle:nth-child(4)  { left: 57%; width: 50px;  height: 50px;  animation-duration: 24s; animation-delay: 1.5s;   background: rgba(254, 74, 151, 0.15); }
-    .circle:nth-child(5)  { left: 73%; width: 95px;  height: 95px;  animation-duration: 34s; animation-delay: 2s;  background: rgba(165, 84, 239, 0.19); }
+    .shape:nth-child(1)  { left: 12%;  width: 130px;  height: 130px; animation-duration: 10s; animation-delay: 0s;   background: rgba(254, 74, 151, 0.22); }
+    .shape:nth-child(2)  { left: 26%;  width: 90px;   height: 90px;  animation-duration: 14s; animation-delay: .6s;  background: rgba(165, 84, 239, 0.20); }
+    .shape:nth-child(3)  { left: 43%;  width: 120px;  height: 120px; animation-duration: 13s; animation-delay: 1.2s; background: rgba(250, 122, 119, 0.18); }
+    .shape:nth-child(4)  { left: 59%;  width: 70px;   height: 70px;  animation-duration: 14s; animation-delay: 1.8s; background: rgba(254, 74, 151, 0.17); }
+    .shape:nth-child(5)  { left: 75%;  width: 100px;   height: 100px;  animation-duration: 15s; animation-delay: 2.4s; background: rgba(165, 84, 239, 0.21); }
+    .shape:nth-child(6)  { left: 85%;  width: 80px;   height: 80px;  animation-duration: 16s; animation-delay: 3.0s; background: rgba(254, 74, 151, 0.19); }
 
     @keyframes riseUp {
-      0%   { transform: translateY(0) rotate(0deg); opacity: 0.8; }
-      100% { transform: translateY(-110vh) rotate(1080deg); opacity: 0; }
+      0%   { transform: translateY(0)   rotate(0deg);   opacity: 0.9; }
+      100% { transform: translateY(-180vh) rotate(1260deg); opacity: 0; }   /* increased rotation for more dynamic feel */
     }
 
     /* Fast pulsing orbs */
@@ -266,17 +267,18 @@
 <div class="bg-animation-wrapper fixed inset-0 -z-30">
   <!-- Rising circles layer -->
   <ul class="circles-container">
-    <li class="circle"></li>
-    <li class="circle"></li>
-    <li class="circle"></li>
-    <li class="circle"></li>
-    <li class="circle"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
   </ul>
 
   <!-- Pulsing orbs layer -->
   <div class="absolute inset-0 pointer-events-none">
-    <div class="absolute top-[-30%] left-[-25%] w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] rounded-full bg-gradient-to-br from-primary/35 via-secondary/25 to-transparent blur-3xl orb-fast opacity-85"></div>
-    <div class="absolute bottom-[-35%] right-[-30%] w-[700px] h-[700px] md:w-[1000px] md:h-[1000px] rounded-full bg-gradient-to-br from-accent/32 via-primary/22 to-transparent blur-3xl orb-fast-alt opacity-80"></div>
+    <div class="absolute top-[-30%] left-[-25%] w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] rounded-full bg-gradient-to-br from-light/35 via-secondary/25 to-transparent blur-3xl orb-fast opacity-85"></div>
+    <div class="absolute bottom-[-35%] right-[-30%] w-[700px] h-[700px] md:w-[1000px] md:h-[1000px] rounded-full bg-gradient-to-br from-accent/32 via-light/22 to-transparent blur-3xl orb-fast-alt opacity-80"></div>
   </div>
 </div>
 
