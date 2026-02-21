@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Techanalytica – Compare & Find the Best Business Software</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#EC4899',
+            secondary: '#A855F7',
+            accent:    '#6366F1',
+            neutral:   '#111827',
+            light:     '#F9FAFB',
+            muted:     '#6B7280',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: #ffffff;
+      color: #111827;
+    }
+
+    .nav-link {
+      position: relative;
+      color: #374151;
+      transition: color 0.2s;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: #EC4899;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0; right: 0;
+      height: 2px;
+      background: #EC4899;
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      transform: scaleX(1);
+    }
+
+    .bg-gradient-hero {
+      background: linear-gradient(135deg, #f3e8ff 0%, #ffffff 70%);
+    }
+
+    /* Dropdown improvements */
+    .group:hover .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0) scale(1);
+    }
+
+    .dropdown {
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(8px) scale(0.98);
+      transition: all 0.18s ease-out;
+    }
+
+    /* Mobile submenu */
+    .mobile-submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease-out;
+    }
+
+    .mobile-submenu.open {
+      max-height: 1400px;
+    }
+
+    .mobile-accordion svg {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-accordion[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+
+    @keyframes typewriter {
+    from { width: 0 }
+    to   { width: 100% }
+    }
+    @keyframes blink {
+    from, to { border-color: transparent }
+    50%      { border-color: #EC4899 }
+    }
+    .animate-typewriter {
+    animation: 
+        typewriter 3.5s steps(40) 1s 1 normal both,
+        blink 0.8s steps(1) infinite;
+    width: 0;
+    }
+
+    /* Hero animations */
+
+@keyframes heroFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroSearch {
+  from {
+    opacity: 0;
+    transform: translateY(60px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes heroTrust {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.animate-hero-fade-up {
+  animation: heroFadeUp 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 100ms;
+}
+
+.animate-hero-search {
+  animation: heroSearch 1s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation-delay: 400ms;
+}
+
+.animate-hero-trust {
+  animation: heroTrust 1.2s ease-out forwards;
+  animation-delay: 800ms;
+}
+/* Moving particles in hero background */
+.particles {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    radial-gradient(circle at 10% 20%, rgba(236, 72, 153, 0.4) 1.5px, transparent 1.5px),
+    radial-gradient(circle at 30% 70%, rgba(168, 85, 247, 0.35) 1.8px, transparent 1.8px),
+    radial-gradient(circle at 80% 40%, rgba(99, 102, 241, 0.3) 1.2px, transparent 1.2px),
+    radial-gradient(circle at 60% 85%, rgba(236, 72, 153, 0.25) 1.6px, transparent 1.6px);
+  background-size: 90px 90px, 120px 120px, 140px 140px, 100px 100px;
+  background-position: 0 0, 45px 60px, 80px 30px, 20px 90px;
+  opacity: 0.45;
+  animation: particlesMove 40s linear infinite;
+}
+
+@keyframes particlesMove {
+  0% {
+    background-position: 0 0, 45px 60px, 80px 30px, 20px 90px;
+  }
+  100% {
+    background-position: -180px -240px, -135px -180px, -100px -210px, -160px -150px;
+  }
+}
+
+  </style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md border-b border-gray-100 transition-all duration-300" id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center text-white font-bold text-xl shadow-md">
+          TA
+        </div>
+        <span class="text-2xl font-extrabold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+          Techanalytica
+        </span>
+      </a>
+
+      <!-- Desktop Menu -->
+      <div class="hidden md:flex items-center gap-9 lg:gap-12">
+
+        <!-- Software Dropdown -->
+        <div class="relative group">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Software
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180 duration-200"></i>
+          </a>
+          <div class="dropdown absolute left-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-3">
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-th-large w-5 text-muted"></i> All Software
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-search w-5 text-muted"></i> Discover Tools
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-star w-5 text-muted"></i> Top Rated
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-fire w-5 text-muted"></i> Trending
+            </a>
+          </div>
+        </div>
+
+        <!-- Industries Dropdown -->
+        <div class="relative group">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Industries
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180 duration-200"></i>
+          </a>
+          <div class="dropdown absolute left-0 top-full mt-3 w-72 bg-white rounded-xl shadow-xl border border-gray-100 py-4 grid grid-cols-2 gap-1">
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">SaaS Startups</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">E-commerce</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Healthcare</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Education</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Finance</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Marketing Agencies</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Real Estate</a>
+            <a href="#" class="px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">Non-Profit</a>
+          </div>
+        </div>
+
+        <!-- Vendors Dropdown -->
+        <div class="relative group">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Vendors
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180 duration-200"></i>
+          </a>
+          <div class="dropdown absolute left-0 top-full mt-3 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-3">
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fab fa-salesforce w-5 text-muted"></i> Salesforce
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fab fa-hubspot w-5 text-muted"></i> HubSpot
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fab fa-shopify w-5 text-muted"></i> Shopify
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-envelope w-5 text-muted"></i> Mailchimp
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-chart-line w-5 text-muted"></i> Power BI
+            </a>
+            <a href="#" class="flex items-center gap-3 px-5 py-3 hover:bg-gray-50 text-gray-700 hover:text-primary">
+              <i class="fas fa-plus w-5 text-muted"></i> View All Vendors
+            </a>
+          </div>
+        </div>
+
+        <a href="#" class="nav-link text-base font-medium">Write a Review</a>
+        <a href="#" class="nav-link text-base font-medium">Blog</a>
+        <a href="#" class="nav-link text-base font-medium">About Us</a>
+      </div>
+
+      <!-- Desktop CTA -->
+      <div class="hidden md:block">
+        <a href="#" class="bg-primary text-white font-semibold px-6 py-3 rounded-xl hover:bg-primary/90 transition shadow-md hover:shadow-lg">
+          Get Started Free
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-menu-btn" class="md:hidden text-gray-700 z-10">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/60 z-[9999] hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="flex flex-col h-full">
+
+      <div class="flex items-center justify-between p-6 border-b">
+        <span class="text-xl font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">Menu</span>
+        <button id="close-mobile-menu">
+          <i class="fas fa-times text-2xl text-gray-600"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-5 py-6 space-y-1">
+
+        <!-- Software Accordion -->
+        <button class="mobile-accordion w-full text-left py-4 px-5 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium text-lg" aria-expanded="false">
+          Software
+          <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3">
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">All Software</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Discover Tools</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Top Rated</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Trending</a>
+        </div>
+
+        <!-- Industries Accordion -->
+        <button class="mobile-accordion w-full text-left py-4 px-5 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium text-lg" aria-expanded="false">
+          Industries
+          <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="mobile-submenu pl-6 grid grid-cols-2 gap-2">
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">SaaS Startups</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">E-commerce</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Healthcare</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Education</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Finance</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Marketing</a>
+        </div>
+
+        <!-- Vendors Accordion -->
+        <button class="mobile-accordion w-full text-left py-4 px-5 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium text-lg" aria-expanded="false">
+          Vendors
+          <svg class="w-5 h-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3">
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Salesforce</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">HubSpot</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Shopify</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">Mailchimp</a>
+          <a href="#" class="block py-3 px-4 text-gray-700 hover:text-primary">View All Vendors</a>
+        </div>
+
+        <a href="#" class="block py-4 px-5 hover:bg-gray-50 rounded-lg font-medium text-lg">Write a Review</a>
+        <a href="#" class="block py-4 px-5 hover:bg-gray-50 rounded-lg font-medium text-lg">Blog</a>
+        <a href="#" class="block py-4 px-5 hover:bg-gray-50 rounded-lg font-medium text-lg">About Us</a>
+
+        <a href="#" class="block mt-8 mx-4 py-4 px-6 bg-gradient-to-r from-primary to-secondary text-white font-semibold rounded-xl text-center shadow-md hover:shadow-lg transition">
+          Get Started Free
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-16 md:h-20"></div>
+
+
+<!-- Hero Section -->
+<!-- Hero Section with moving particles background -->
+<section class="relative py-16 md:py-28 lg:py-36 text-center overflow-hidden min-h-[80vh] flex items-center bg-white">
+
+  <!-- Moving particles layer -->
+  <div class="absolute inset-0 pointer-events-none z-0">
+    <div class="particles"></div>
+  </div>
+
+  <!-- Content layer -->
+  <div class="relative z-10 max-w-5xl mx-auto px-5 sm:px-8">
+    <div class="opacity-0 translate-y-8 animate-hero-fade-up">
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold text-gray-900 leading-tight tracking-tight">
+        Find the Right Software<br class="hidden sm:block"> for Your Business — Fast
+      </h1>
+
+      <p class="mt-6 text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto">
+        Compare 18,000+ tools with verified reviews, transparent pricing, features, and integrations — trusted by 300,000+ professionals.
+      </p>
+    </div>
+
+    <div class="mt-10 max-w-3xl mx-auto opacity-0 translate-y-12 animate-hero-search">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Search by name, category or problem (e.g. CRM, project management, Slack alternative)" 
+          class="w-full pl-14 pr-6 py-5 text-lg rounded-2xl border border-gray-300 focus:border-primary focus:ring-4 focus:ring-primary/30 shadow-xl transition-all duration-300 bg-white/95 backdrop-blur-sm peer"
+        />
+        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-muted pointer-events-none transition-colors peer-focus:text-primary">
+          <i class="fas fa-search text-xl"></i>
+        </div>
+      </div>
+      <p class="mt-4 text-sm text-gray-500">
+        Popular: Salesforce • HubSpot • Notion • QuickBooks • Slack • Zoom
+      </p>
+    </div>
+
+    <div class="mt-12 flex flex-wrap justify-center gap-x-10 gap-y-6 text-base text-gray-600 opacity-0 animate-hero-trust">
+      <div class="flex items-center gap-2 bg-white/80 px-5 py-2.5 rounded-full shadow-sm">
+        <i class="fas fa-check-circle text-primary text-xl"></i>
+        <span>250,000+ Verified Reviews</span>
+      </div>
+      <div class="flex items-center gap-2 bg-white/80 px-5 py-2.5 rounded-full shadow-sm">
+        <i class="fas fa-shield-alt text-primary text-xl"></i>
+        <span>100% Transparent & Unbiased</span>
+      </div>
+      <div class="flex items-center gap-2 bg-white/80 px-5 py-2.5 rounded-full shadow-sm">
+        <i class="fas fa-users text-primary text-xl"></i>
+        <span>Free Forever — No Paywall</span>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- Popular Categories -->
+<section class="py-16 md:py-20 bg-gray-50">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+      Explore Popular Categories
+    </h2>
+
+    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6 md:gap-8">
+      <a href="#" class="bg-white p-8 rounded-2xl shadow-md card-hover border border-gray-100 text-center">
+        <i class="fas fa-tasks text-5xl text-primary mb-6"></i>
+        <h3 class="text-xl font-semibold mb-2">Project Management</h3>
+        <p class="text-muted">1,400+ tools</p>
+      </a>
+
+      <a href="#" class="bg-white p-8 rounded-2xl shadow-md card-hover border border-gray-100 text-center">
+        <i class="fas fa-heart text-5xl text-primary mb-6"></i>
+        <h3 class="text-xl font-semibold mb-2">CRM</h3>
+        <p class="text-muted">1,200+ tools</p>
+      </a>
+
+      <a href="#" class="bg-white p-8 rounded-2xl shadow-md card-hover border border-gray-100 text-center">
+        <i class="fas fa-chart-bar text-5xl text-primary mb-6"></i>
+        <h3 class="text-xl font-semibold mb-2">Analytics & BI</h3>
+        <p class="text-muted">900+ tools</p>
+      </a>
+
+      <a href="#" class="bg-white p-8 rounded-2xl shadow-md card-hover border border-gray-100 text-center">
+        <i class="fas fa-store text-5xl text-primary mb-6"></i>
+        <h3 class="text-xl font-semibold mb-2">E-commerce</h3>
+        <p class="text-muted">1,100+ tools</p>
+      </a>
+
+      <a href="#" class="bg-white p-8 rounded-2xl shadow-md card-hover border border-gray-100 text-center">
+        <i class="fas fa-robot text-5xl text-primary mb-6"></i>
+        <h3 class="text-xl font-semibold mb-2">AI & Automation</h3>
+        <p class="text-muted">2,000+ tools</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- Featured / Trending Tools (example) -->
+<section class="py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-6 sm:px-8">
+    <h2 class="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-900">
+      Trending & Highly Rated Tools
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Example Card -->
+      <div class="bg-white rounded-2xl shadow-lg overflow-hidden card-hover border border-gray-100">
+        <div class="p-8">
+          <div class="flex items-center gap-4 mb-6">
+            <i class="fab fa-hubspot text-5xl text-orange-600"></i>
+            <div>
+              <h3 class="text-2xl font-bold">HubSpot CRM</h3>
+              <p class="text-muted">4.6 ★ • 12,400 reviews</p>
+            </div>
+          </div>
+          <p class="text-gray-700 mb-6">All-in-one CRM with powerful marketing, sales, and service tools. Free plan available.</p>
+          <a href="#" class="text-primary font-semibold hover:underline">View Details →</a>
+        </div>
+      </div>
+
+      <!-- Repeat similar cards for Notion, Slack, etc. -->
+      <!-- Add 2–5 more cards here -->
+    </div>
+  </div>
+</section>
+
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('shadow-md', window.scrollY > 20);
+});
+
+// Mobile menu
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeBtn = document.getElementById('close-mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  setTimeout(() => mobileMenu.querySelector('div').classList.remove('translate-x-full'), 10);
+});
+
+function closeMobileMenu() {
+  mobileMenu.querySelector('div').classList.add('translate-x-full');
+  setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+}
+
+closeBtn.addEventListener('click', closeMobileMenu);
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) closeMobileMenu();
+});
+
+// Mobile accordions
+document.querySelectorAll('.mobile-accordion').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    btn.nextElementSibling.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>

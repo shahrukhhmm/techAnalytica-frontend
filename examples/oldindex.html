@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Techanalytica – Find the Right Software</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#FE4A97',
+            secondary: '#FA7A77',
+            accent:    '#A554EF',
+            light:     '#EFF2EF',
+            dark:      '#353531',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    *{
+      font-family: 'Inter', sans-serif;
+    }
+    :root {
+      --primary: #FE4A97;
+      --secondary: #FA7A77;
+      --accent: #A554EF;
+      --light: #EFF2EF;
+      --dark: #353531;
+    }
+
+    .nav-link {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      padding-bottom: 3px;
+      color: var(--dark);
+      transition: color 0.35s ease;
+      white-space: nowrap;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      width: 0;
+      height: 2px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 9999px;
+      transform: translateX(-50%) scaleX(0);
+      transform-origin: center;
+      transition: transform 0.38s cubic-bezier(0.65, 0.05, 0.36, 1);
+    }
+
+    .nav-link:hover,
+    .nav-link:focus-visible {
+      color: var(--primary);
+    }
+
+    .nav-link:hover::after,
+    .nav-link:focus-visible::after {
+      transform: translateX(-50%) scaleX(1);
+    }
+
+    .has-dropdown {
+      position: relative;
+      z-index: 40;
+    }
+
+    .has-dropdown svg {
+      transition: transform 0.3s ease;
+    }
+
+    .has-dropdown:hover svg {
+      transform: rotate(180deg);
+    }
+
+    nav {
+      transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.45);
+      z-index: 1000;
+    }
+
+    nav.scrolled {
+      background-color: rgba(239, 242, 239, 0.14);
+      backdrop-filter: blur(22px);
+      box-shadow: 0 10px 30px -10px rgba(0,0,0,0.18);
+      border-bottom: 1px solid rgba(229, 231, 235, 0.7);
+    }
+
+    /* ──────────────────────────────────────────────── */
+    /* Dropdown – unified style for all menus */
+    /* ──────────────────────────────────────────────── */
+    .dropdown,
+    .submenu {
+      position: absolute;
+      background: rgba(20, 22, 35, 0.97);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      box-shadow: 0 18px 60px rgba(0,0,0,0.4);
+      min-width: 260px;
+      padding: 12px 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.22s ease, transform 0.22s ease;
+      transform: translateY(10px);
+      z-index: 2000 !important;
+    }
+
+    .has-dropdown:hover > .dropdown,
+    .has-dropdown:focus-within > .dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .dropdown-item.has-submenu:hover > .submenu,
+    .dropdown-item.has-submenu:focus-within > .submenu {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    .submenu {
+      top: -8px;
+      left: 100%;
+      margin-left: 10px;
+    }
+
+    .dropdown-item,
+    .sub-item {
+      display: flex;
+      align-items: center;
+      padding: 13px 26px;
+      color: rgba(255,255,255,0.92);
+      font-size: 0.96rem;
+      transition: all 0.22s ease;
+    }
+
+    .dropdown-item:hover,
+    .sub-item:hover {
+      background: rgba(255,255,255,0.09);
+      color: white;
+      padding-left: 30px;
+    }
+
+    .arrow-right {
+      margin-left: auto;
+      font-size: 1.15rem;
+      opacity: 0.7;
+      transition: transform 0.22s ease;
+    }
+
+    .dropdown-item:hover .arrow-right,
+    .sub-item:hover .arrow-right {
+      transform: translateX(5px);
+    }
+
+    .menu-text {
+      @apply text-sm lg:text-base font-medium tracking-tight;
+    }
+
+    /* Search input focus style */
+    .search-input:focus {
+      outline: none;
+      box-shadow: 0 0 0 4px rgba(254, 74, 151, 0.15);
+      border-color: var(--primary);
+    }
+
+    .popular-link:hover {
+      color: var(--primary);
+      text-decoration: underline;
+    }
+
+    /* Mobile accordion arrow */
+    .mobile-accordion svg {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-accordion[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+
+
+    .bg-animation-wrapper {
+      position: fixed;
+      inset: 0;
+      overflow: hidden;
+      background: linear-gradient(135deg, #ffffff 0%, #fdfdfd 50%, #f5f6f8 100%);
+      z-index: -30;
+    }
+
+    .circles-layer {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .shape {
+      position: absolute;
+      /* border-radius: 16px;         
+      border-radius: 0;               */
+      background: rgba(254, 74, 151, 0.8);
+      box-shadow: 0 0 35px rgba(165, 84, 239, 0.21);
+      animation: riseUp linear infinite;
+      bottom: -220px;                   /* slightly deeper start so they appear fully */
+    }
+
+    .shape:nth-child(1)  { left: 12%;  width: 130px;  height: 130px; animation-duration: 10s; animation-delay: 0s;   background: rgba(254, 74, 151, 0.22); }
+    .shape:nth-child(2)  { left: 26%;  width: 90px;   height: 90px;  animation-duration: 14s; animation-delay: .6s;  background: rgba(165, 84, 239, 0.20); }
+    .shape:nth-child(3)  { left: 43%;  width: 120px;  height: 120px; animation-duration: 13s; animation-delay: 1.2s; background: rgba(250, 122, 119, 0.18); }
+    .shape:nth-child(4)  { left: 59%;  width: 70px;   height: 70px;  animation-duration: 14s; animation-delay: 1.8s; background: rgba(254, 74, 151, 0.17); }
+    .shape:nth-child(5)  { left: 75%;  width: 100px;   height: 100px;  animation-duration: 15s; animation-delay: 2.4s; background: rgba(165, 84, 239, 0.21); }
+    .shape:nth-child(6)  { left: 85%;  width: 80px;   height: 80px;  animation-duration: 16s; animation-delay: 3.0s; background: rgba(254, 74, 151, 0.19); }
+
+    @keyframes riseUp {
+      0%   { transform: translateY(0)   rotate(0deg);   opacity: 0.9; }
+      100% { transform: translateY(-180vh) rotate(1260deg); opacity: 0; }   /* increased rotation for more dynamic feel */
+    }
+
+    /* Fast pulsing orbs */
+    @keyframes pulseMove {
+      0%   { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+      25%  { transform: translate(20%, 15%) scale(1.16) rotate(18deg); opacity: 0.92; }
+      50%  { transform: translate(-15%, 25%) scale(0.92) rotate(-12deg); opacity: 0.48; }
+      75%  { transform: translate(16%, -20%) scale(1.12) rotate(10deg); opacity: 0.88; }
+      100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.7; }
+    }
+
+    @keyframes pulseMoveAlt {
+      0%   { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.65; }
+      33%  { transform: translate(-22%, -16%) scale(1.20) rotate(-20deg); opacity: 0.90; }
+      66%  { transform: translate(14%, 20%) scale(0.88) rotate(14deg); opacity: 0.45; }
+      100% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 0.65; }
+    }
+
+    .orb-fast {
+      animation: pulseMove 9s infinite ease-in-out;
+    }
+
+    .orb-fast-alt {
+      animation: pulseMoveAlt 11.5s infinite ease-in-out;
+    }
+
+    /* Fade-in hero content */
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fade-up {
+      animation: fadeInUp 1.3s ease-out forwards;
+    }
+
+    .delay-400 { animation-delay: 0.4s; }
+    .delay-800 { animation-delay: 0.8s; }
+  </style>
+</head>
+<body class="min-h-screen text-[#353531] antialiased relative">
+
+<!-- Background – both animations merged -->
+<div class="bg-animation-wrapper fixed inset-0 -z-30">
+  <!-- Rising circles layer -->
+  <ul class="circles-container">
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+    <li class="shape"></li>
+  </ul>
+
+  <!-- Pulsing orbs layer -->
+  <div class="absolute inset-0 pointer-events-none">
+    <div class="absolute top-[-30%] left-[-25%] w-[800px] h-[800px] md:w-[1200px] md:h-[1200px] rounded-full bg-gradient-to-br from-light/35 via-secondary/25 to-transparent blur-3xl orb-fast opacity-85"></div>
+    <div class="absolute bottom-[-35%] right-[-30%] w-[700px] h-[700px] md:w-[1000px] md:h-[1000px] rounded-full bg-gradient-to-br from-accent/32 via-light/22 to-transparent blur-3xl orb-fast-alt opacity-80"></div>
+  </div>
+</div>
+
+<!-- NAVBAR -->
+<nav class="w-full fixed top-0 z-50" id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 transition-all duration-500">
+
+      <a href="#" class="flex items-center gap-3 flex-shrink-0 z-10">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-lg">
+          TA
+        </div>
+        <span class="text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Techanalytica
+        </span>
+      </a>
+
+      <div class="hidden md:flex items-center justify-center flex-1 space-x-6 lg:space-x-8 xl:space-x-10 flex-nowrap">
+        <div class="relative group has-dropdown">
+          <a href="#" class="nav-link menu-text">
+            Software
+            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          <div class="dropdown right-0 top-full mt-4">
+            <a href="#" class="dropdown-item px-6 py-3">Project Management</a>
+            <a href="#" class="dropdown-item px-6 py-3">CRM</a>
+            <a href="#" class="dropdown-item px-6 py-3">Analytics & BI</a>
+            <a href="#" class="dropdown-item px-6 py-3">E-commerce Platforms</a>
+            <a href="#" class="dropdown-item px-6 py-3">Marketing Automation</a>
+            <a href="#" class="dropdown-item px-6 py-3">Developer Tools</a>
+          </div>
+        </div>
+
+        <div class="relative group has-dropdown">
+          <a href="#" class="nav-link menu-text">
+            Industries
+            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          <div class="dropdown right-0 top-full mt-4">
+            <div class="dropdown-item has-submenu relative group/sub">
+              <a href="#" class="flex items-center justify-between w-full px-6 py-3">
+                Healthcare
+                <span class="arrow-right">›</span>
+              </a>
+              <div class="submenu">
+                <a href="#" class="sub-item">Electronic Health Records</a>
+                <a href="#" class="sub-item">Telemedicine Platforms</a>
+                <a href="#" class="sub-item">Practice Management</a>
+                <a href="#" class="sub-item">Medical Billing</a>
+              </div>
+            </div>
+            <div class="dropdown-item has-submenu relative group/sub">
+              <a href="#" class="flex items-center justify-between w-full px-6 py-3">
+                Education
+                <span class="arrow-right">›</span>
+              </a>
+              <div class="submenu">
+                <a href="#" class="sub-item">Learning Management Systems</a>
+                <a href="#" class="sub-item">Student Information Systems</a>
+                <a href="#" class="sub-item">Campus Management</a>
+              </div>
+            </div>
+            <a href="#" class="dropdown-item px-6 py-3">Manufacturing</a>
+          </div>
+        </div>
+
+        <div class="relative group has-dropdown">
+          <a href="#" class="nav-link menu-text">
+            Vendors
+            <svg class="ml-1.5 w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          <div class="dropdown right-0 top-full mt-4">
+            <a href="#" class="dropdown-item px-6 py-3">Salesforce</a>
+            <a href="#" class="dropdown-item px-6 py-3">Microsoft</a>
+            <a href="#" class="dropdown-item px-6 py-3">Google</a>
+            <a href="#" class="dropdown-item px-6 py-3">Adobe</a>
+            <a href="#" class="dropdown-item px-6 py-3">Oracle</a>
+          </div>
+        </div>
+
+        <a href="#" class="nav-link menu-text whitespace-nowrap">Write a Review</a>
+        <a href="#" class="nav-link menu-text whitespace-nowrap">Blog</a>
+        <a href="#" class="nav-link menu-text whitespace-nowrap">About Us</a>
+      </div>
+
+      <div class="hidden md:block flex-shrink-0 z-10">
+        <a href="#" class="bg-gradient-to-r from-primary via-secondary to-accent text-white font-semibold px-6 py-2.5 rounded-full hover:shadow-2xl hover:shadow-primary/40 transition transform hover:-translate-y-1 text-sm">
+          Join or Login
+        </a>
+      </div>
+
+      <button id="mobile-menu-btn" class="md:hidden text-dark focus:outline-none z-10">
+        <svg class="w-7 h-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/60 z-[2000] hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out">
+    <div class="p-6 flex flex-col h-full overflow-y-auto">
+      <div class="flex justify-between items-center mb-8">
+        <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Menu</span>
+        <button id="close-menu" class="text-gray-600 hover:text-dark">
+          <svg class="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+
+      <nav class="flex flex-col space-y-2 text-base font-medium">
+        <a href="#" class="py-3 px-4 hover:bg-gray-50 rounded-lg hover:text-primary transition">Software</a>
+
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-50 rounded-lg flex items-center justify-between hover:text-primary transition"
+          aria-expanded="false" data-target="mobile-industries">
+          Industries
+          <svg class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+          </svg>
+        </button>
+        <div id="mobile-industries" class="hidden pl-6 space-y-3 mt-1 mb-3">
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Healthcare</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Education</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Finance & Banking</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Retail & E-commerce</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Manufacturing</a>
+        </div>
+
+        <a href="#" class="py-3 px-4 hover:bg-gray-50 rounded-lg hover:text-primary transition">Vendors</a>
+        <a href="#" class="py-3 px-4 hover:bg-gray-50 rounded-lg hover:text-primary transition">Write a Review</a>
+        <a href="#" class="py-3 px-4 hover:bg-gray-50 rounded-lg hover:text-primary transition">Blog</a>
+        <a href="#" class="py-3 px-4 hover:bg-gray-50 rounded-lg hover:text-primary transition">About Us</a>
+
+        <a href="#" class="bg-gradient-to-r from-primary via-secondary to-accent text-white py-4 px-6 rounded-full text-center mt-8 font-semibold shadow-md hover:shadow-lg transition">
+          Join or Login
+        </a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<!-- Spacer -->
+<div class="h-16"></div>
+
+<!-- HERO -->
+<section class="relative pt-16 pb-24 md:pt-24 md:pb-40">
+  <div class="max-w-5xl mx-auto px-6 text-center z-10 relative">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl font-extrabold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-5 leading-tight animate-fade-up">
+      Find the Right Software<br class="hidden sm:block"> for Your Business
+    </h1>
+
+    <p class="text-base md:text-lg text-gray-700 mb-8 max-w-4xl mx-auto animate-fade-up delay-400">
+      Read verified reviews, compare features, pricing, and integrations from thousands of tools.
+    </p>
+
+    <div class="max-w-4xl mx-auto relative animate-fade-up delay-800">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Search software by name, category or need..." 
+          class="search-input w-full pl-14 pr-6 py-4 text-base rounded-full border-2 border-gray-300 focus:border-primary shadow-lg transition-all duration-300 bg-white/90 backdrop-blur-sm"
+        />
+        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+
+      <!-- <div class="mt-5 flex flex-wrap justify-center gap-3 text-xs md:text-sm text-gray-600">
+        <span>Popular:</span>
+        <a href="#" class="popular-link hover:text-primary transition-colors">CRM</a>
+        <a href="#" class="popular-link hover:text-primary transition-colors">Project Management</a>
+        <a href="#" class="popular-link hover:text-primary transition-colors">HR Software</a>
+        <a href="#" class="popular-link hover:text-primary transition-colors">Accounting</a>
+      </div> -->
+      
+    </div>
+  </div>
+</section>
+
+
+Lorem ipsum dolor sit amet consectetur adipisicing elit. Ratione sunt quidem explicabo natus! Tempore vero labore debitis blanditiis nulla vitae autem eum consectetur voluptatem explicabo facere optio excepturi, at ex modi, aliquid eaque quibusdam temporibus quis quae corrupti laboriosam? Ipsa, nisi? Sit fugiat, nulla qui molestias odit est omnis iure alias sed tempora tempore sunt ratione quas quidem quo soluta commodi unde! Blanditiis, dignissimos iste! Accusantium quasi ipsa assumenda provident. Non nihil aliquam laudantium magnam minima, maxime molestiae provident officia ipsa vel delectus inventore veritatis unde, nesciunt quod adipisci explicabo similique aperiam accusamus magni ducimus est debitis excepturi veniam? Quisquam ipsum et, minus ut animi culpa temporibus, nesciunt qui iusto ullam provident maxime perspiciatis veniam totam laudantium ratione dolores nulla sed laboriosam obcaecati doloribus porro error! Sint nesciunt, voluptatibus, quisquam ab voluptates vero unde est cumque autem saepe modi debitis vel harum deleniti. Repellat nam dignissimos placeat mollitia dolore. Sequi non sed ducimus animi ipsam aliquid eligendi aliquam in assumenda ratione repudiandae unde dolore, tempore adipisci cumque consequuntur eaque, error eum repellendus cum cupiditate, iste similique! Neque animi dicta, vero voluptatibus expedita molestiae impedit sit molestias laboriosam deleniti repellat aperiam sed nemo odio, eligendi repudiandae explicabo delectus, facilis laudantium nam blanditiis modi nobis. Nam doloremque eos illo atque minima corrupti temporibus placeat, fugiat perspiciatis odit nesciunt iste hic expedita, earum quidem repellat quasi veniam voluptatem quia. Similique libero distinctio corporis, porro, itaque dignissimos laborum ratione odit veritatis molestiae et excepturi necessitatibus adipisci eius. Neque aperiam nisi doloribus ad assumenda autem vitae pariatur optio. Rerum, veritatis inventore molestiae dicta saepe dolore obcaecati, voluptatem animi officiis in nisi facere? Molestiae rem qui voluptatum natus, provident nihil veniam inventore repellat fugiat pariatur quod ex iure perspiciatis excepturi aut numquam quos praesentium hic at libero? Quia, ratione. Numquam tempore, officia id nulla neque sunt.
+
+<script>
+// Scroll behavior
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 80) {
+    navbar.classList.add('scrolled');
+  } else {
+    navbar.classList.remove('scrolled');
+  }
+});
+
+// Mobile menu toggle
+const mobileBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeBtn = document.getElementById('close-menu');
+
+mobileBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  setTimeout(() => {
+    mobileMenu.querySelector('div').classList.remove('translate-x-full');
+  }, 10);
+});
+
+function closeMobileMenu() {
+  mobileMenu.querySelector('div').classList.add('translate-x-full');
+  setTimeout(() => mobileMenu.classList.add('hidden'), 300);
+}
+
+closeBtn.addEventListener('click', closeMobileMenu);
+mobileMenu.addEventListener('click', (e) => {
+  if (e.target === mobileMenu) closeMobileMenu();
+});
+
+// Mobile accordion
+document.querySelectorAll('.mobile-accordion').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const targetId = btn.getAttribute('data-target');
+    const content = document.getElementById(targetId);
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    
+    btn.setAttribute('aria-expanded', !isOpen);
+    content.classList.toggle('hidden');
+  });
+});
+</script>
+
+</body>
+</html>

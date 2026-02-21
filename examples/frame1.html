@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tecanalytiqa – Hero Section</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            'brand-pink':    '#ff69b4',
+            'brand-magenta': '#d946ef',
+            'brand-purple':  '#a855f7',
+            'brand-accent':  '#ec4899',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-gradient-to-br from-pink-50 via-purple-50 to-white 
+             dark:from-gray-950 dark:via-purple-950 dark:to-gray-900 
+             text-gray-900 dark:text-gray-100 
+             min-h-screen font-sans antialiased">
+
+  <!-- ==================================================
+       SECTION 1: HERO + SEARCH BAR
+  ================================================== -->
+
+  <section class="relative pt-16 pb-24 md:pt-28 md:pb-40 overflow-hidden">
+    <!-- Subtle background gradient overlay -->
+    <div class="absolute inset-0 bg-gradient-to-br from-pink-100/50 via-purple-100/40 to-transparent 
+                dark:from-purple-900/40 dark:via-pink-900/30 pointer-events-none"></div>
+
+    <div class="relative max-w-5xl mx-auto px-5 sm:px-8 text-center z-10">
+      <!-- Main headline -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold leading-tight 
+                 bg-gradient-to-r from-brand-pink via-brand-purple to-brand-magenta 
+                 bg-clip-text text-transparent mb-6 md:mb-8">
+        Where you go for software.
+      </h1>
+
+      <!-- Subtitle with highlighted number -->
+      <p class="text-lg sm:text-xl md:text-2xl lg:text-3xl text-gray-700 dark:text-gray-300 mb-10 md:mb-14 max-w-4xl mx-auto leading-relaxed">
+        Find the right software and services based on 
+        <span class="font-extrabold text-brand-purple dark:text-brand-magenta">
+          3,331,100+
+        </span> 
+        real reviews.
+      </p>
+
+      <!-- Search bar container -->
+      <div class="max-w-3xl mx-auto">
+        <div class="relative group">
+          <!-- Input field -->
+          <input 
+            type="text"
+            placeholder="Search Software, AI Tools, Categories..." 
+            class="w-full pl-6 pr-36 py-5 md:py-6 rounded-full 
+                   bg-white/90 dark:bg-gray-800/85 backdrop-blur-md 
+                   border border-purple-300/60 dark:border-purple-700/60 
+                   shadow-2xl focus:outline-none focus:ring-4 focus:ring-brand-purple/50 
+                   focus:border-brand-purple/60 text-lg md:text-xl 
+                   placeholder-gray-500 dark:placeholder-gray-400 
+                   transition-all duration-300"
+          />
+
+          <!-- Search button (floating inside input on right) -->
+          <button class="absolute right-2 top-1/2 -translate-y-1/2 
+                         bg-gradient-to-r from-brand-purple to-brand-magenta 
+                         text-white px-7 py-4 md:px-9 md:py-5 rounded-full 
+                         font-semibold shadow-lg hover:opacity-90 hover:shadow-xl 
+                         transition-all duration-300 transform hover:scale-105">
+            Search
+          </button>
+        </div>
+      </div>
+
+      <!-- Optional small trust / CTA line below search (seen in some variants) -->
+      <p class="mt-8 text-base sm:text-lg text-gray-600 dark:text-gray-400">
+        Join or Login to write reviews and get personalized recommendations
+      </p>
+    </div>
+  </section>
+
+</body>
+</html>

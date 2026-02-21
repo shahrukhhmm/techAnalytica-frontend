@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Techanalytica – Find the Right Software</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#FE4A97',
+            secondary: '#FA7A77',
+            accent:    '#A554EF',
+            darkbg:    '#0a0a14',
+            darktext:  '#e0e0ff',
+            cardbg:    'rgba(30, 30, 50, 0.6)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(135deg, #0f0f1a 0%, #0a0a14 100%);
+      color: #e0e0ff;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    #bg-canvas {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    /* Floating boxes – dark mode friendly */
+    .floating-products .product-box {
+      background: rgba(30, 30, 50, 0.55);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(165,84,239,0.35);
+      color: #e0e0ff;
+      box-shadow: 0 10px 35px rgba(0,0,0,0.6);
+    }
+
+    /* Navbar */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      transition: all 0.4s ease;
+      backdrop-filter: blur(12px);
+    }
+
+    nav.scrolled {
+      background: rgba(15, 15, 26, 0.92);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .nav-link {
+      color: #d1d5ff;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #fe4a97;
+    }
+
+    /* Fixed Dropdown Styling */
+    .dropdown-container {
+      position: relative;
+    }
+
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 240px;
+      background: rgba(20, 20, 40, 0.97);
+      border: 1px solid rgba(165,84,239,0.35);
+      border-radius: 12px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      padding: 8px 0;
+      margin-top: 8px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(8px) scale(0.98);
+      transition: all 0.22s ease;
+      z-index: 50;
+    }
+
+    .dropdown-container:hover .dropdown,
+    .dropdown-container:focus-within .dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0) scale(1);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 24px;
+      color: #d1d5ff;
+      transition: all 0.18s;
+      font-size: 0.95rem;
+    }
+
+    .dropdown-item:hover {
+      background: rgba(254,74,149,0.18);
+      color: #fe4a97;
+      padding-left: 28px;
+    }
+
+    .dropdown-item i {
+      width: 20px;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    .dropdown-item:hover i {
+      color: #fe4a97;
+    }
+
+    /* Mobile menu */
+    #mobile-menu > div {
+      background: #0f0f1a;
+      border-left: 1px solid #2a2a40;
+    }
+
+    .mobile-accordion {
+      color: #e0e0ff;
+    }
+
+    .mobile-submenu a {
+      color: #c4c4ff;
+    }
+
+    .mobile-submenu a:hover {
+      color: #fe4a97;
+    }
+
+    /* Hero gradient text */
+    .hero-gradient {
+      background: linear-gradient(90deg, #fe4a97, #c084fc, #a554ef);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Search input dark style */
+    input[type="text"] {
+      background: rgba(30, 30, 50, 0.7);
+      border-color: #4a4a6a;
+      color: white;
+    }
+
+    input[type="text"]::placeholder {
+      color: #a0a0c0;
+    }
+
+    input[type="text"]:focus {
+      border-color: #fe4a97;
+      box-shadow: 0 0 0 3px rgba(254,74,149,0.25);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Firecrawl-style animated background -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Floating product icons -->
+<div class="floating-products fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="left:8%; top:15%; animation-delay:0s;">
+    <i class="fab fa-asana"></i>
+  </div>
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="right:10%; top:25%; animation-delay:2.8s;">
+    <i class="fas fa-chart-line"></i>
+  </div>
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="left:12%; bottom:22%; animation-delay:5.6s;">
+    <i class="fas fa-store"></i>
+  </div>
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="right:11%; bottom:15%; animation-delay:7.5s;">
+    <i class="fas fa-envelope-open-text"></i>
+  </div>
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="left:18%; top:58%; animation-delay:11.2s;">
+    <i class="fab fa-slack-hash"></i>
+  </div>
+  <div class="product-box absolute w-20 h-20 md:w-24 md:h-24 rounded-2xl flex items-center justify-center text-4xl animate-float" style="right:15%; top:68%; animation-delay:14s;">
+    <i class="fas fa-sticky-note"></i>
+  </div>
+</div>
+
+<!-- Navbar -->
+<nav id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+
+      <a href="#" class="flex items-center gap-3 z-10">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-xl shadow-lg">
+          TA
+        </div>
+        <span class="text-2xl font-extrabold hero-gradient">Techanalytica</span>
+      </a>
+
+      <div class="hidden md:flex items-center gap-8 lg:gap-10">
+
+        <!-- Software Dropdown -->
+        <div class="dropdown-container group relative">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Software
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+          </a>
+          <div class="dropdown opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-tasks w-5"></i> Project Management</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-heart w-5"></i> CRM</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-chart-bar w-5"></i> Analytics & BI</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-store w-5"></i> E-commerce</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-bullhorn w-5"></i> Marketing Automation</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-code-branch w-5"></i> Developer Tools</a>
+          </div>
+        </div>
+
+        <!-- Categories Dropdown -->
+        <div class="dropdown-container group relative">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Categories
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+          </a>
+          <div class="dropdown opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-briefcase w-5"></i> Business & Productivity</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-users-cog w-5"></i> HR & Recruitment</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-chart-pie w-5"></i> Finance & Accounting</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-headset w-5"></i> Customer Support</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-robot w-5"></i> AI & Automation</a>
+          </div>
+        </div>
+
+        <!-- Popular Dropdown -->
+        <div class="dropdown-container group relative">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Popular
+            <i class="fas fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+          </a>
+          <div class="dropdown opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto">
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fab fa-salesforce w-5"></i> Salesforce</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fab fa-hubspot w-5"></i> HubSpot</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fab fa-shopify w-5"></i> Shopify</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-envelope w-5"></i> Mailchimp</a>
+            <a href="#" class="dropdown-item flex items-center gap-3"><i class="fas fa-chart-line w-5"></i> Power BI</a>
+          </div>
+        </div>
+
+        <a href="#" class="nav-link text-base font-medium">Write a Review</a>
+        <a href="#" class="nav-link text-base font-medium">Blog</a>
+      </div>
+
+      <div class="hidden md:block">
+        <a href="#" class="bg-gradient-to-r from-primary to-accent text-white font-medium px-6 py-2.5 rounded-full shadow-xl hover:shadow-2xl hover:-translate-y-0.5 transition-all">
+          Join / Login
+        </a>
+      </div>
+
+      <button id="mobile-menu-btn" class="md:hidden text-gray-300 text-2xl z-10">
+        <i class="fas fa-bars"></i>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/70 z-[9999] hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-[#0f0f1a] shadow-2xl transform translate-x-full transition-transform duration-400 ease-in-out">
+    <div class="flex flex-col h-full text-gray-200">
+
+      <div class="flex items-center justify-between p-6 border-b border-gray-800">
+        <span class="text-xl font-bold hero-gradient">Techanalytica</span>
+        <button id="close-mobile-menu" class="text-gray-300 hover:text-white">
+          <i class="fas fa-times text-2xl"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-6 space-y-2">
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-800 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Software
+          <i class="fas fa-chevron-down text-sm transition-transform"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3 hidden">
+          <a href="#" class="block py-2 px-3 hover:text-primary">Project Management</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">CRM</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Analytics & BI</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">E-commerce</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Marketing Automation</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Developer Tools</a>
+        </div>
+
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-800 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Categories
+          <i class="fas fa-chevron-down text-sm transition-transform"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3 hidden">
+          <a href="#" class="block py-2 px-3 hover:text-primary">Business & Productivity</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">HR & Recruitment</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Finance & Accounting</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Customer Support</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">AI & Automation</a>
+        </div>
+
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-800 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Popular
+          <i class="fas fa-chevron-down text-sm transition-transform"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3 hidden">
+          <a href="#" class="block py-2 px-3 hover:text-primary">Salesforce</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">HubSpot</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Shopify</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Mailchimp</a>
+          <a href="#" class="block py-2 px-3 hover:text-primary">Power BI</a>
+        </div>
+
+        <a href="#" class="block py-3 px-4 hover:bg-gray-800 rounded-lg font-medium">Write a Review</a>
+        <a href="#" class="block py-3 px-4 hover:bg-gray-800 rounded-lg font-medium">Blog</a>
+
+        <a href="#" class="block mt-10 py-4 px-6 bg-gradient-to-r from-primary to-accent text-white font-medium rounded-full text-center shadow-lg hover:shadow-xl transition">
+          Join or Login
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spacer -->
+<div class="h-16 md:h-20"></div>
+
+<!-- Hero -->
+<section class="py-16 md:py-32 text-center relative z-10">
+  <div class="max-w-6xl mx-auto px-6">
+    <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold hero-gradient mb-6 leading-tight">
+      Find the Right Software<br class="hidden sm:block"> for Your Business
+    </h1>
+
+    <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+      Compare features, pricing, verified reviews and integrations — thousands of tools in one intelligent place.
+    </p>
+
+    <div class="max-w-2xl mx-auto">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Search software by name, category or need..." 
+          class="w-full pl-14 pr-6 py-4 text-base rounded-full bg-gray-900/60 border border-gray-700 text-white placeholder-gray-400 focus:border-primary focus:ring-2 focus:ring-primary/40 transition-all backdrop-blur-md shadow-lg"
+        />
+        <div class="absolute left-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+// ────────────────────────────────────────────────
+// Firecrawl-style background animation
+// ────────────────────────────────────────────────
+const canvas = document.getElementById('bg-canvas');
+const ctx = canvas.getContext('2d');
+
+let particles = [];
+const particleCount = 120;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Particle {
+  constructor() { this.reset(); }
+
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height * 1.5;
+    this.radius = Math.random() * 4 + 1.5;
+    this.baseAlpha = Math.random() * 0.25 + 0.08;
+    this.alpha = this.baseAlpha;
+    this.speedY = Math.random() * 0.45 + 0.15;
+    this.sway = (Math.random() - 0.5) * 0.4;
+    this.hue = 200 + Math.random() * 140;
+    this.pulse = Math.random() * 0.0015 + 0.0005;
+  }
+
+  update() {
+    this.y -= this.speedY;
+    this.x += Math.sin(Date.now() * 0.00045 + this.x) * this.sway;
+
+    if (this.y < -60) {
+      this.y = canvas.height + 80;
+      this.reset();
+    }
+
+    this.alpha = this.baseAlpha + Math.sin(Date.now() * this.pulse) * 0.18;
+    this.alpha = Math.max(0.05, Math.min(0.4, this.alpha));
+  }
+
+  draw() {
+    ctx.save();
+    ctx.globalAlpha = this.alpha;
+   // ctx.shadowColor = `hsl(${this.hue}, 100%, 70%)`;
+    ctx.shadowBlur = 25 + this.radius * 5;
+    ctx.fillStyle = `hsl(${this.hue}, 100%, 68%)`;
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    ctx.fill();
+    ctx.restore();
+  }
+}
+
+for (let i = 0; i < particleCount; i++) {
+  particles.push(new Particle());
+}
+
+function animateBg() {
+  ctx.fillStyle = 'rgba(10, 10, 20, 0.08)';
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach(p => {
+    p.update();
+    p.draw();
+  });
+
+  requestAnimationFrame(animateBg);
+}
+
+animateBg();
+
+// ────────────────────────────────────────────────
+// Navbar scroll effect
+// ────────────────────────────────────────────────
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ────────────────────────────────────────────────
+// Mobile menu logic
+// ────────────────────────────────────────────────
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeMobileBtn = document.getElementById('close-mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  setTimeout(() => {
+    mobileMenu.querySelector('div').classList.remove('translate-x-full');
+  }, 10);
+});
+
+function closeMobile() {
+  mobileMenu.querySelector('div').classList.add('translate-x-full');
+  setTimeout(() => mobileMenu.classList.add('hidden'), 350);
+}
+
+closeMobileBtn.addEventListener('click', closeMobile);
+mobileMenu.addEventListener('click', (e) => {
+  if (e.target === mobileMenu) closeMobile();
+});
+
+// Mobile accordion submenus
+document.querySelectorAll('.mobile-accordion').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !isOpen);
+
+    const submenu = btn.nextElementSibling;
+    if (isOpen) {
+      submenu.classList.add('hidden');
+    } else {
+      submenu.classList.remove('hidden');
+    }
+  });
+});
+</script>
+
+</body>
+</html>

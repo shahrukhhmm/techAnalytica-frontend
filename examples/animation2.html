@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>More Dynamic Background - Tailwind CSS</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-bg': '#0b0b1e',
+            'accent': '#6366f1',       // indigo
+            'accent-soft': '#818cf8',
+            'purple-soft': '#a78bfa',
+          },
+          animation: {
+            'drift-slow': 'drift 90s linear infinite',
+            'drift-reverse': 'drift 110s linear infinite reverse',
+            'pulse-glow': 'pulseGlow 8s ease-in-out infinite',
+            'float-rotate': 'floatRotate 25s ease-in-out infinite',
+            'breathe-scale': 'breathe 14s ease-in-out infinite',
+          },
+          keyframes: {
+            drift: {
+              '0%': { transform: 'translateX(-25%)' },
+              '100%': { transform: 'translateX(125%)' },
+            },
+            pulseGlow: {
+              '0%, 100%': { opacity: '0.15', transform: 'scale(1)' },
+              '50%': { opacity: '0.35', transform: 'scale(1.15)' },
+            },
+            floatRotate: {
+              '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
+              '25%': { transform: 'translate(12%, 8%) rotate(5deg)' },
+              '50%': { transform: 'translate(-8%, -10%) rotate(-4deg)' },
+              '75%': { transform: 'translate(10%, -6%) rotate(6deg)' },
+            },
+            breathe: {
+              '0%, 100%': { transform: 'scale(1)' },
+              '50%': { transform: 'scale(1.08)' },
+            },
+          },
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .glow-layer {
+      background: radial-gradient(circle at 40% 60%, rgba(99, 102, 241, 0.12), transparent 60%);
+    }
+    .glow-layer-2 {
+      background: radial-gradient(circle at 70% 30%, rgba(167, 139, 250, 0.09), transparent 55%);
+    }
+  </style>
+</head>
+<body class="bg-dark-bg text-gray-100 min-h-screen overflow-x-hidden relative font-sans antialiased">
+
+  <!-- Background Animation Layers – More Movement -->
+  <div class="fixed inset-0 pointer-events-none z-0 overflow-hidden">
+
+    <!-- Layer 1: Slow drifting wide glow bands / rectangles -->
+    <div class="absolute top-[-20%] left-[-30%] w-[160%] h-96 bg-gradient-to-r from-transparent via-accent/10 to-transparent opacity-60 animate-drift-slow glow-layer"></div>
+    <div class="absolute bottom-[-15%] right-[-40%] w-[180%] h-80 bg-gradient-to-l from-transparent via-purple-soft/8 to-transparent opacity-50 animate-drift-reverse glow-layer-2"></div>
+
+    <!-- Layer 2: Pulsing breathing orbs / soft circles -->
+    <div class="absolute top-[15%] left-[20%] w-64 h-64 rounded-full bg-accent/10 backdrop-blur-md animate-pulse-glow animate-breathe"></div>
+    <div class="absolute bottom-[25%] right-[15%] w-80 h-80 rounded-full bg-purple-soft/8 backdrop-blur-lg animate-pulse-glow animate-breathe" style="animation-delay: 3s;"></div>
+
+    <!-- Layer 3: Floating + rotating geometric boxes with subtle borders -->
+    <div class="absolute top-[30%] left-[10%] w-56 h-56 border-2 border-accent/30 rounded-2xl bg-gradient-to-br from-accent/5 to-transparent animate-float-rotate" style="animation-duration: 28s;"></div>
+    <div class="absolute top-[55%] right-[18%] w-72 h-48 border border-purple-soft/40 rounded-xl bg-white/3 backdrop-blur-sm animate-float-rotate" style="animation-duration: 32s; animation-delay: 4s;"></div>
+    <div class="absolute bottom-[20%] left-[40%] w-48 h-64 border border-accent-soft/30 rounded-3xl bg-gradient-to-t from-transparent via-accent/4 to-transparent animate-float-rotate" style="animation-duration: 22s; animation-delay: 7s;"></div>
+
+    <!-- Extra small accent pulses for depth -->
+    <div class="absolute top-[45%] left-[65%] w-32 h-32 rounded-full bg-accent/6 animate-pulse-glow blur-md" style="animation-duration: 10s;"></div>
+  </div>
+
+  <!-- Hero Content Overlay -->
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-indigo-300 via-indigo-400 to-purple-400 bg-clip-text text-transparent">
+      Dynamic & Alive Background
+    </h1>
+    
+    <p class="text-xl md:text-2xl max-w-3xl mb-12 text-gray-300 leading-relaxed">
+      More movement with drifting gradients, breathing glows, rotating floats — inspired by modern SaaS heroes like Pylon. Still lightweight & CSS-only.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-6">
+      <a href="#" class="px-10 py-5 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl shadow-xl transition-all transform hover:scale-105 hover:shadow-2xl">
+        Get Started
+      </a>
+      <a href="#" class="px-10 py-5 border-2 border-indigo-500/60 hover:border-indigo-400 text-indigo-300 hover:text-white font-semibold rounded-xl transition-all hover:shadow-lg">
+        Learn More
+      </a>
+    </div>
+  </div>
+
+</body>
+</html>

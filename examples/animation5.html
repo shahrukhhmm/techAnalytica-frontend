@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Techanalytica – Find the Right Software</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary:   '#FE4A97',
+            secondary: '#FA7A77',
+            accent:    '#A554EF',
+            light:     '#ffffff',
+            graybg:    '#f8fafc',
+            darktext:  '#1f2937',
+          }
+        }
+      }
+    }
+  </script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" 
+        integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <style>
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #ffffff;
+      color: #1f2937;
+      min-height: 100vh;
+    }
+
+    /* ──────── FLOATING BOXES ──────── */
+    .floating-products {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -30;
+      overflow: hidden;
+    }
+
+    .product-box {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      background: white;
+      border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08), 0 0 0 1px rgba(254,74,149,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      animation: float-product 16s ease-in-out infinite;
+      border: 1px solid rgba(165,84,239,0.14);
+    }
+
+    .product-box:nth-child(1) { left: 7%;   top: 22%; animation-delay: 0s;    }
+    .product-box:nth-child(2) { right: 11%; top: 35%; animation-delay: 3.4s; }
+    .product-box:nth-child(3) { left: 18%;  top: 58%; animation-delay: 7.1s; }
+    .product-box:nth-child(4) { right: 15%; top: 68%; animation-delay: 10.2s;}
+
+    @media (max-width: 640px) {
+      .product-box {
+        width: 60px;
+        height: 60px;
+        font-size: 1.6rem;
+      }
+      .product-box:nth-child(1) { left: 5%; top: 15%; }
+      .product-box:nth-child(2) { right: 8%; top: 28%; }
+      .product-box:nth-child(3) { left: 12%; bottom: 20%; }
+      .product-box:nth-child(4) { right: 10%; bottom: 12%; }
+    }
+
+    @keyframes float-product {
+      0%, 100% { transform: translateY(0) rotate(2deg); }
+      50%      { transform: translateY(-50px) rotate(-2deg); }
+    }
+
+    /* ──────── STAR CANVAS ──────── */
+    .star-canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -38;
+    }
+
+    /* ──────── NAVBAR ──────── */
+    nav.scrolled {
+      background: rgba(255,255,255,0.96);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+    }
+
+    .nav-link {
+      position: relative;
+      color: #1f2937;
+      transition: color 0.3s;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0; right: 0;
+      height: 2.5px;
+      background: linear-gradient(90deg, #FE4A97, #A554EF);
+      transform: scaleX(0);
+      transition: transform 0.4s cubic-bezier(0.65,0.05,0.36,1);
+      border-radius: 999px;
+    }
+
+    .nav-link:hover::after {
+      transform: scaleX(1);
+    }
+
+    .nav-link:hover {
+      color: #FE4A97;
+    }
+
+    /* ──────── DROPDOWN ──────── */
+    .dropdown {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      min-width: 220px;
+      background: white;
+      border: 1px solid #e5e7eb;
+      border-radius: 12px;
+      box-shadow: 0 16px 50px -10px rgba(0,0,0,0.14);
+      padding: 6px 0;
+      margin-top: 10px;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(6px);
+      transition: all 0.22s ease;
+      z-index: 50;
+    }
+
+    .has-dropdown:hover > .dropdown,
+    .has-dropdown:focus-within > .dropdown {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .dropdown-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 20px;
+      font-size: 0.94rem;
+      color: #374151;
+      transition: all 0.18s;
+    }
+
+    .dropdown-item:hover {
+      background: #f8fafc;
+      color: #FE4A97;
+      padding-left: 24px;
+    }
+
+    .dropdown-item i {
+      width: 20px;
+      text-align: center;
+      color: #9ca3af;
+    }
+
+    /* ──────── MOBILE MENU ──────── */
+    #mobile-menu {
+      transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mobile-submenu {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease;
+    }
+
+    .mobile-submenu.open {
+      max-height: 600px;
+    }
+
+    .mobile-accordion svg {
+      transition: transform 0.3s ease;
+    }
+
+    .mobile-accordion[aria-expanded="true"] svg {
+      transform: rotate(180deg);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Star Canvas -->
+<canvas id="star-canvas" class="star-canvas"></canvas>
+
+<!-- Floating icons -->
+<div class="floating-products">
+  <div class="product-box"><i class="fab fa-asana"></i></div>
+  <div class="product-box"><i class="fas fa-chart-line"></i></div>
+  <div class="product-box"><i class="fas fa-store"></i></div>
+  <div class="product-box"><i class="fas fa-envelope-open-text"></i></div>
+</div>
+
+<!-- Navbar -->
+<nav class="fixed top-0 left-0 right-0 z-50 transition-all duration-500" id="navbar">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16 md:h-20">
+
+      <!-- Logo -->
+      <a href="#" class="flex items-center gap-2.5 z-10">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-br from-primary to-accent flex items-center justify-center text-white font-bold text-lg shadow-md">
+          TA
+        </div>
+        <span class="text-xl font-extrabold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+          Techanalytica
+        </span>
+      </a>
+
+      <!-- Desktop menu -->
+      <div class="hidden md:flex items-center gap-8 lg:gap-10">
+
+        <div class="relative has-dropdown">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Software
+            <i class="fas fa-chevron-down text-xs"></i>
+          </a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item"><i class="fas fa-tasks"></i> Project Management</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-heart"></i> CRM</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-chart-bar"></i> Analytics & BI</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-store"></i> E-commerce</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-bullhorn"></i> Marketing Automation</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-code-branch"></i> Developer Tools</a>
+          </div>
+        </div>
+
+        <div class="relative has-dropdown">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Categories
+            <i class="fas fa-chevron-down text-xs"></i>
+          </a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item"><i class="fas fa-briefcase"></i> Business & Productivity</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-users-cog"></i> HR & Recruitment</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-chart-pie"></i> Finance & Accounting</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-headset"></i> Customer Support</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-robot"></i> AI & Automation</a>
+          </div>
+        </div>
+
+        <div class="relative has-dropdown">
+          <a href="#" class="nav-link text-base font-medium flex items-center gap-1.5">
+            Popular
+            <i class="fas fa-chevron-down text-xs"></i>
+          </a>
+          <div class="dropdown">
+            <a href="#" class="dropdown-item"><i class="fab fa-salesforce"></i> Salesforce</a>
+            <a href="#" class="dropdown-item"><i class="fab fa-hubspot"></i> HubSpot</a>
+            <a href="#" class="dropdown-item"><i class="fab fa-shopify"></i> Shopify</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-envelope"></i> Mailchimp</a>
+            <a href="#" class="dropdown-item"><i class="fas fa-chart-line"></i> Power BI</a>
+          </div>
+        </div>
+
+        <a href="#" class="nav-link text-base font-medium">Write a Review</a>
+        <a href="#" class="nav-link text-base font-medium">Blog</a>
+      </div>
+
+      <!-- Desktop CTA -->
+      <div class="hidden md:block z-10">
+        <a href="#" class="bg-gradient-to-r from-primary to-accent text-white font-medium px-6 py-2.5 rounded-full hover:shadow-xl hover:shadow-pink-500/30 transition-all hover:-translate-y-0.5">
+          Join / Login
+        </a>
+      </div>
+
+      <!-- Mobile toggle -->
+      <button id="mobile-menu-btn" class="md:hidden text-gray-700 z-10">
+        <i class="fas fa-bars text-2xl"></i>
+      </button>
+
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div id="mobile-menu" class="fixed inset-0 bg-black/50 z-[9999] hidden">
+  <div class="absolute right-0 top-0 bottom-0 w-4/5 max-w-sm bg-white shadow-2xl transform translate-x-full transition-transform duration-400">
+    <div class="flex flex-col h-full">
+
+      <div class="flex items-center justify-between p-5 border-b">
+        <span class="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Menu</span>
+        <button id="close-mobile-menu">
+          <i class="fas fa-times text-2xl text-gray-600"></i>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-5 py-6 space-y-2">
+        <!-- Software accordion -->
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Software
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3">
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Project Management</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">CRM</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Analytics & BI</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">E-commerce</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Marketing Automation</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Developer Tools</a>
+        </div>
+
+        <!-- Categories accordion -->
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Categories
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3">
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Business & Productivity</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">HR & Recruitment</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Finance & Accounting</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Customer Support</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">AI & Automation</a>
+        </div>
+
+        <!-- Popular accordion -->
+        <button class="mobile-accordion w-full text-left py-3 px-4 hover:bg-gray-50 rounded-lg flex justify-between items-center font-medium" aria-expanded="false">
+          Popular
+          <i class="fas fa-chevron-down text-sm"></i>
+        </button>
+        <div class="mobile-submenu pl-6 space-y-3">
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Salesforce</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">HubSpot</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Shopify</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Mailchimp</a>
+          <a href="#" class="block py-2 px-3 text-gray-700 hover:text-primary">Power BI</a>
+        </div>
+
+        <a href="#" class="block py-3 px-4 hover:bg-gray-50 rounded-lg font-medium">Write a Review</a>
+        <a href="#" class="block py-3 px-4 hover:bg-gray-50 rounded-lg font-medium">Blog</a>
+
+        <a href="#" class="block mt-8 mx-4 py-4 px-6 bg-gradient-to-r from-primary to-accent text-white font-medium rounded-full text-center shadow-md hover:shadow-lg transition">
+          Join or Login
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Spacer for fixed navbar -->
+<div class="h-16 md:h-20"></div>
+
+<!-- Hero -->
+<section class="py-12 sm:py-16 md:py-24 lg:py-32 text-center">
+  <div class="max-w-6xl mx-auto px-5 sm:px-6 lg:px-8">
+    <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-extrabold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent mb-5 sm:mb-6 lg:mb-8 leading-tight">
+      Find the Right Software<br class="hidden sm:block"> for Your Business
+    </h1>
+
+    <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 md:mb-10 lg:mb-12 max-w-3xl mx-auto">
+      Compare features, pricing, verified reviews and integrations — thousands of tools in one place.
+    </p>
+
+    <div class="max-w-2xl mx-auto px-4 sm:px-0">
+      <div class="relative">
+        <input 
+          type="text" 
+          placeholder="Search software by name, category or need..." 
+          class="w-full pl-12 sm:pl-14 pr-5 sm:pr-6 py-3.5 sm:py-4 text-base rounded-full border-2 border-gray-300 focus:border-primary focus:ring-2 focus:ring-primary/30 shadow-lg transition-all bg-white/90 backdrop-blur-sm"
+        />
+        <div class="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none">
+          <svg class="w-5 h-5 sm:w-6 sm:h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- JavaScript -->
+<script>
+// Navbar scroll effect
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// Mobile menu
+const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+const mobileMenu = document.getElementById('mobile-menu');
+const closeBtn = document.getElementById('close-mobile-menu');
+
+mobileMenuBtn.addEventListener('click', () => {
+  mobileMenu.classList.remove('hidden');
+  setTimeout(() => mobileMenu.querySelector('div').classList.remove('translate-x-full'), 10);
+});
+
+function closeMobileMenu() {
+  mobileMenu.querySelector('div').classList.add('translate-x-full');
+  setTimeout(() => mobileMenu.classList.add('hidden'), 350);
+}
+
+closeBtn.addEventListener('click', closeMobileMenu);
+mobileMenu.addEventListener('click', e => {
+  if (e.target === mobileMenu) closeMobileMenu();
+});
+
+// Mobile accordions
+document.querySelectorAll('.mobile-accordion').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const expanded = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', !expanded);
+    btn.nextElementSibling.classList.toggle('open');
+  });
+});
+
+// Starfield animation
+const canvas = document.getElementById('star-canvas');
+const ctx = canvas.getContext('2d');
+let stars = [];
+const numStars = 450;
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+
+window.addEventListener('resize', resizeCanvas);
+resizeCanvas();
+
+class Star {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height * 1.4;
+    this.size = Math.random() * 2.4 + 0.7;
+    this.baseOpacity = Math.random() * 0.45 + 0.25;
+    this.opacity = this.baseOpacity;
+    this.twinkleSpeed = Math.random() * 0.007 + 0.0025;
+    this.twinklePhase = Math.random() * Math.PI * 2;
+    this.speedY = Math.random() * 0.18 + 0.08;
+    this.swayX = (Math.random() - 0.5) * 0.12;
+  }
+  update() {
+    this.y -= this.speedY;
+    this.x += this.swayX * Math.sin(Date.now() * 0.0004 + this.x);
+    if (this.y < -10) {
+      this.y = canvas.height + 20;
+      this.x = Math.random() * canvas.width;
+      this.reset();
+    }
+    this.opacity = this.baseOpacity + Math.sin(Date.now() * this.twinkleSpeed + this.twinklePhase) * 0.32;
+    this.opacity = Math.max(0.08, Math.min(0.92, this.opacity));
+  }
+  draw() {
+    ctx.globalAlpha = this.opacity;
+    ctx.fillStyle = 'rgba(254,74,151,0.6)';
+    ctx.beginPath();
+    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < numStars; i++) stars.push(new Star());
+
+function animate() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  stars.forEach(s => { s.update(); s.draw(); });
+  requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>

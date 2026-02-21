@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Particle Background - Tailwind + JS</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'dark-bg': '#0a0a1f',
+            'dark-secondary': '#111133',
+            'accent': '#6366f1',
+            'accent-light': '#a5b4fc',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    body { overflow-x: hidden; }
+    canvas { 
+      position: fixed;
+      inset: 0;
+      z-index: -10;
+      pointer-events: all; /* allows mouse interaction */
+    }
+  </style>
+</head>
+<body class="bg-dark-bg text-gray-100 min-h-screen font-sans antialiased">
+
+  <!-- Full-screen Canvas Background -->
+  <canvas id="canvas"></canvas>
+
+  <!-- Hero Content (on top) -->
+  <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 text-center">
+    <h1 class="text-5xl md:text-7xl font-bold mb-6 bg-gradient-to-r from-accent-light to-accent bg-clip-text text-transparent">
+      Welcome to Your AI Future
+    </h1>
+    
+    <p class="text-xl md:text-2xl max-w-3xl mb-10 text-gray-300">
+      Crawl, scrape, and unlock web data for AI agents — fast, clean, and at scale.
+    </p>
+
+    <div class="flex flex-col sm:flex-row gap-5">
+      <a href="#" 
+         class="px-8 py-4 bg-accent hover:bg-indigo-600 text-white font-semibold rounded-lg shadow-lg transition-all transform hover:scale-105">
+        Get Started
+      </a>
+      <a href="#" 
+         class="px-8 py-4 border border-gray-600 hover:border-accent text-gray-300 hover:text-white font-semibold rounded-lg transition-all">
+        View Docs
+      </a>
+    </div>
+  </div>
+
+  <!-- JavaScript for Particle Animation -->
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width, height;
+    let particles = [];
+    let mouse = { x: null, y: null, radius: 180 };
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Mouse move interaction
+    window.addEventListener('mousemove', (e) => {
+      mouse.x = e.x;
+      mouse.y = e.y;
+    });
+
+    window.addEventListener('mouseout', () => {
+      mouse.x = null;
+      mouse.y = null;
+    });
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * width;
+        this.y = Math.random() * height;
+        this.size = Math.random() * 2.8 + 0.5;
+        this.speedX = (Math.random() - 0.5) * 0.5;
+        this.speedY = (Math.random() - 0.5) * 0.5;
+      }
+
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+
+        // Bounce off edges
+        if (this.x < 0 || this.x > width)  this.speedX *= -1;
+        if (this.y < 0 || this.y > height) this.speedY *= -1;
+
+        // Gentle mouse attraction/repulsion
+        if (mouse.x && mouse.y) {
+          let dx = mouse.x - this.x;
+          let dy = mouse.y - this.y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < mouse.radius) {
+            let force = (mouse.radius - distance) / mouse.radius;
+            this.x -= dx * force * 0.02;
+            this.y -= dy * force * 0.02;
+          }
+        }
+      }
+
+      draw() {
+        ctx.fillStyle = 'rgba(165, 180, 252, 0.7)'; // indigo-300-ish
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particles = [];
+      const count = Math.floor((width * height) / 9000); // ~60-180 particles depending on screen
+      for (let i = 0; i < count; i++) {
+        particles.push(new Particle());
+      }
+    }
+
+    initParticles();
+    window.addEventListener('resize', initParticles);
+
+    function connectParticles() {
+      for (let a = 0; a < particles.length; a++) {
+        for (let b = a + 1; b < particles.length; b++) {
+          let dx = particles[a].x - particles[b].x;
+          let dy = particles[a].y - particles[b].y;
+          let distance = Math.sqrt(dx * dx + dy * dy);
+
+          if (distance < 140) {
+            ctx.strokeStyle = `rgba(99, 102, 241, ${1 - distance / 140})`; // indigo-500 fade
+            ctx.lineWidth = 0.7;
+            ctx.beginPath();
+            ctx.moveTo(particles[a].x, particles[a].y);
+            ctx.lineTo(particles[b].x, particles[b].y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    function animate() {
+      // Gentle fade trail instead of full clear
+      ctx.fillStyle = 'rgba(10, 10, 31, 0.08)';
+      ctx.fillRect(0, 0, width, height);
+
+      particles.forEach(p => {
+        p.update();
+        p.draw();
+      });
+
+      connectParticles();
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
+
+</body>
+</html>
