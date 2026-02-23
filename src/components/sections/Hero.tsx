@@ -61,6 +61,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ y: [0, -20, 0], x: [0, 10, 0] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ willChange: "transform" }}
                     className="absolute top-[15%] left-[5%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
@@ -77,6 +78,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ y: [0, 20, 0], rotate: [0, 5, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
+                    style={{ willChange: "transform" }}
                     className="absolute top-[45%] left-[10%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
@@ -90,6 +92,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ y: [0, -15, 0] }}
                     transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: 1 }}
+                    style={{ willChange: "transform" }}
                     className="absolute bottom-[15%] left-[8%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
@@ -106,6 +109,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ y: [0, 15, 0], x: [0, -10, 0] }}
                     transition={{ duration: 3.5, repeat: Infinity, ease: "easeInOut" }}
+                    style={{ willChange: "transform" }}
                     className="absolute top-[20%] right-[8%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
@@ -122,6 +126,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ scale: [1, 1.05, 1] }}
                     transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.8 }}
+                    style={{ willChange: "transform" }}
                     className="absolute top-[50%] right-[15%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
@@ -135,6 +140,7 @@ const Hero = () => {
                 <motion.div
                     animate={{ y: [0, -20, 0] }}
                     transition={{ duration: 5, repeat: Infinity, ease: "easeInOut", delay: 1.2 }}
+                    style={{ willChange: "transform" }}
                     className="absolute bottom-[20%] right-[6%] p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700"
                 >
                     <div className="flex items-center space-x-3">
